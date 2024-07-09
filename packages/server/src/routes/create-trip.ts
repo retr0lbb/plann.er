@@ -8,7 +8,7 @@ import {dayjs} from "../lib/dayjs-config"
 
 
 export default async function CreateTrip(app: FastifyInstance){
-    app.withTypeProvider<ZodTypeProvider>().post("/trip", {
+    app.withTypeProvider<ZodTypeProvider>().post("/trips", {
         schema: {
             body: z.object({
                 destination: z.string().min(3).max(200),
