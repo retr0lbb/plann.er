@@ -2,9 +2,10 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { prisma } from "../lib/prisma";
-import dayjs from "dayjs";
 import { getMailClient } from "../lib/mail";
 import nodemailer from "nodemailer"
+import {dayjs} from "../lib/dayjs-config"
+
 
 export default async function CreateTrip(app: FastifyInstance){
     app.withTypeProvider<ZodTypeProvider>().post("/trip", {
@@ -13,11 +14,8 @@ export default async function CreateTrip(app: FastifyInstance){
                 destination: z.string().min(3).max(200),
                 starts_at: z.coerce.date(),
                 ends_at: z.coerce.date(),
-
-                //not implemented
                 owner_name: z.string(),
                 owner_email: z.string().email(),
-
                 emails_to_invite: z.array(z.string().email())
             })
         }
@@ -58,10 +56,13 @@ export default async function CreateTrip(app: FastifyInstance){
             }
         })
 
-        //aqui vai as datas e os links
-        const confirmLinktrip = `http://localhost:3333/trips/${trip.id}/confirm`
+        const formatedStartsDate = dayjs(starts_at).format("LL")
+        const formatedEndsDate = dayjs(ends_at).format("LL")
 
+        const confirmLinktrip = `http://localhost:3333/trips/${trip.id}/confirm`
         const mail = await getMailClient()
+
+
         const message = await mail.sendMail({
             from: {
                 name: "Equipe Passegure",
@@ -74,12 +75,12 @@ export default async function CreateTrip(app: FastifyInstance){
             subject: "Teste envio de email",
 
             html: `
-                <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">s
-                <p>Você solicitou uma viagem para <strong>${trip.destination}</strong> no periodo entre o dia <strong>${dayjs(trip.starts_at).get("day")} a ${dayjs(trip.ends_at).get("day")} de  ${dayjs(trip.ends_at).format("DD")} de  ${dayjs(trip.ends_at).get("year")}</strong></p>
+                <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">
+                <p>Você solicitou uma viagem para <strong>${trip.destination}</strong> no periodo entre o dia <strong>${formatedStartsDate} a ${formatedEndsDate}</strong></p>
                 <p></p>
                 <p>Para confirmar sua viagem, clique no link abaixo</p>
                 <p></p>
-                <a href="${confirmLinktrip}">link</a>
+                <a href="${confirmLinktrip}">Confirmar Viagem</a>
                 <p></p>
                 <p></p>
                 <p>Caso você não saiba do que se trata esse email apenas ignore</p>
