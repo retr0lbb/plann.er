@@ -16,11 +16,13 @@ export default async function CreateTrip(app: FastifyInstance){
 
                 //not implemented
                 owner_name: z.string(),
-                owner_email: z.string().email()
+                owner_email: z.string().email(),
+
+                emails_to_invite: z.array(z.string().email())
             })
         }
     } ,async (request, reply) => {
-        const {destination, ends_at, starts_at, owner_email, owner_name} = request.body
+        const {destination, ends_at, starts_at, owner_email, owner_name, emails_to_invite} = request.body
 
         if(dayjs(starts_at).isBefore(new Date())){
             throw new Error("Invalid trip start date.")
@@ -35,12 +37,31 @@ export default async function CreateTrip(app: FastifyInstance){
                 destination,
                 ends_at,
                 starts_at,
-                slug: destination.toLocaleLowerCase()
+                slug: destination.toLocaleLowerCase(),
+                participants: {
+                    createMany: {
+                        data: [
+                            {
+                                email: owner_email,
+                                name: owner_name,
+                                is_owner: true,
+                                is_confirmed: true
+                            },
+                            ...emails_to_invite.map(item => {
+                                return {
+                                    email: item,
+                                }
+                            })
+                        ]
+                    }
+                }
             }
         })
 
-        const mail = await getMailClient()
+        //aqui vai as datas e os links
+        const confirmLinktrip = `http://localhost:3333/trips/${trip.id}/confirm`
 
+        const mail = await getMailClient()
         const message = await mail.sendMail({
             from: {
                 name: "Equipe Passegure",
@@ -52,7 +73,18 @@ export default async function CreateTrip(app: FastifyInstance){
             },
             subject: "Teste envio de email",
 
-            html: "<h1>Sou furry</h1>"
+            html: `
+                <div style="font-family: sans-serif; font-size: 16px; line-height: 1.6;">s
+                <p>Você solicitou uma viagem para <strong>${trip.destination}</strong> no periodo entre o dia <strong>${dayjs(trip.starts_at).get("day")} a ${dayjs(trip.ends_at).get("day")} de  ${dayjs(trip.ends_at).format("DD")} de  ${dayjs(trip.ends_at).get("year")}</strong></p>
+                <p></p>
+                <p>Para confirmar sua viagem, clique no link abaixo</p>
+                <p></p>
+                <a href="${confirmLinktrip}">link</a>
+                <p></p>
+                <p></p>
+                <p>Caso você não saiba do que se trata esse email apenas ignore</p>
+                </div>
+            `.trim()
         })
         
 
