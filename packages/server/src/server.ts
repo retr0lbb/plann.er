@@ -5,7 +5,7 @@ const app = fastify()
 
 
 app.get("/", () => {
-    return "Welcome to my api"
+    return "Welcome to my api asd"
 })
 
 app.listen({ port: 3333}).then(() => {
