@@ -3,6 +3,7 @@ import createTrip from "./routes/create-trip";
 import confirmTrip from "./routes/confirm-trip";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import cors from "@fastify/cors"
+import confirmParticipantsInTrip from "./routes/confirm-participant";
 
 const app = fastify()
 
@@ -16,6 +17,7 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(createTrip)
 app.register(confirmTrip)
+app.register(confirmParticipantsInTrip)
 
 
 
