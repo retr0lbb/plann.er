@@ -6,6 +6,8 @@ import confirmTrip from "./routes/confirm-trip";
 import confirmParticipantsInTrip from "./routes/confirm-participant";
 import createActivity from "./routes/activities/create-activity";
 import getActivities from "./routes/activities/get-activities";
+import createLink from "./routes/links/create-link";
+import getLinks from "./routes/links/get-links";
 
 const app = fastify()
 
@@ -22,6 +24,8 @@ app.register(confirmTrip)
 app.register(confirmParticipantsInTrip)
 app.register(createActivity)
 app.register(getActivities)
+app.register(createLink)
+app.register(getLinks)
 
 
 
