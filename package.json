@@ -8,7 +8,8 @@
   },
   "keywords": [],
   "workspaces": [
-    "./packages/server"
+    "./packages/server",
+    "./packages/client"
   ],
   "author": "",
   "license": "ISC",
