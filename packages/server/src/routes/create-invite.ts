@@ -6,6 +6,7 @@ import {dayjs} from "../lib/dayjs-config"
 import { getMailClient } from "../lib/mail";
 import nodemailer from "nodemailer";
 import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 
 export default async function createInvite(app: FastifyInstance){
@@ -45,7 +46,7 @@ export default async function createInvite(app: FastifyInstance){
         const mail = await getMailClient()
 
 
-        const confirmLinktrip = `http://localhost:3333/participants/${participant.id}/confirm`
+        const confirmLinktrip = `${env.API_BASE_URL}/participants/${participant.id}/confirm`
             const message = await mail.sendMail({
                 from: {
                     name: "Equipe Passegure",

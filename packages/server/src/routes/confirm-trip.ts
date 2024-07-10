@@ -6,6 +6,7 @@ import { getMailClient } from "../lib/mail";
 import { dayjs } from "../lib/dayjs-config"
 import nodemailer from "nodemailer"
 import { ClientError } from "../errors/client-error";
+import { env } from "../env";
 
 
 export default async function confirmTrip(app: FastifyInstance){
@@ -37,7 +38,7 @@ export default async function confirmTrip(app: FastifyInstance){
         }
 
         if(trip.is_confirmed){
-            return reply.redirect(`http://localhost:3000/trips/${trip.id}`)
+            return reply.redirect(`${env.CLIENT_BASE_URL}/trips/${trip.id}`)
         }
 
 
@@ -58,7 +59,7 @@ export default async function confirmTrip(app: FastifyInstance){
 
         await Promise.all(
             trip.participants.map(async(participant) => {
-                const confirmLinktrip = `http://localhost:3333/participants/${participant.id}/confirm`
+                const confirmLinktrip = `${env.API_BASE_URL}/participants/${participant.id}/confirm`
                 const message = await mail.sendMail({
                     from: {
                         name: "Equipe Passegure",
@@ -86,6 +87,6 @@ export default async function confirmTrip(app: FastifyInstance){
             })
         )
 
-        return reply.status(301).redirect(`http://localhost:3000/trips/${trip.id}`)
+        return reply.status(301).redirect(`${env.CLIENT_BASE_URL}/trips/${trip.id}`)
     })
 }

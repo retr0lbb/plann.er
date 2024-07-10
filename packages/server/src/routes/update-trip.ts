@@ -2,8 +2,6 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { prisma } from "../lib/prisma";
-import { getMailClient } from "../lib/mail";
-import nodemailer from "nodemailer"
 import {dayjs} from "../lib/dayjs-config"
 import { ClientError } from "../errors/client-error";
 
