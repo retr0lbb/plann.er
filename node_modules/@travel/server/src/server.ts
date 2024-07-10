@@ -10,6 +10,10 @@ import createLink from "./routes/links/create-link";
 import getLinks from "./routes/links/get-links";
 import getParticipants from "./routes/get-participants";
 import createInvite from "./routes/create-invite";
+import UpdateTrip from "./routes/update-trip";
+import getTripDetails from "./routes/get-trip-details";
+import getParticipant from "./routes/get-participant";
+import { errorHandler } from "./error-handler";
 
 const app = fastify()
 
@@ -19,6 +23,8 @@ app.register(cors, {
 //adicionar esses dois plugins
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+app.setErrorHandler(errorHandler)
 
 
 app.register(createTrip)
@@ -30,6 +36,9 @@ app.register(createLink)
 app.register(getLinks)
 app.register(getParticipants)
 app.register(createInvite)
+app.register(UpdateTrip)
+app.register(getTripDetails)
+app.register(getParticipant)
 
 
 app.listen({ port: 3333}).then(() => {
