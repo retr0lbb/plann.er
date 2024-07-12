@@ -5,9 +5,11 @@ import { Button } from "../../components/button";
 interface ConfirmTripModalProps{
     CloseIsConfirmTripModal: () => void
     createTrip: (event: FormEvent<HTMLFormElement>) => void
+    setOwnerName: (ownerName: string)  => void
+    setOwnerEmail: (ownerEmail: string) => void
 }
 
-export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip}: ConfirmTripModalProps){
+export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip, setOwnerEmail, setOwnerName}: ConfirmTripModalProps){
     return(
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
         <div className="w-[640px] rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
@@ -27,6 +29,7 @@ export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip}: ConfirmT
             <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
               <User className="text-zinc-400 size-5" />
               <input
+                onChange={e => setOwnerName(e.target.value)}
                 type="text"
                 name="name"
                 placeholder= "Seu nome completo"
@@ -37,6 +40,7 @@ export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip}: ConfirmT
             <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
               <Mail className="text-zinc-400 size-5" />
               <input
+                onChange={ e => setOwnerEmail(e.target.value)}
                 type="email"
                 name="email"
                 placeholder= "Seu e-mail pessoal"
