@@ -52,7 +52,7 @@ export function InviteGuestsModal({CloseGuestsModal, addNewEmailToInvite, emails
             </div>
 
             <Button
-
+              variant="primary"
               type="submit"
             >
               Convidar
