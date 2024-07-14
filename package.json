@@ -9,8 +9,7 @@
   "keywords": [],
   "workspaces": [
     "./packages/server",
-    "./packages/client",
-    "./packages/mobile"
+    "./packages/client"
   ],
   "author": "",
   "license": "ISC",
