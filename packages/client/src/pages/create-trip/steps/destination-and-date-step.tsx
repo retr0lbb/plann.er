@@ -1,21 +1,30 @@
-import { ArrowRight, Calendar, MapPin, Settings2, X } from "lucide-react";
+import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { Button } from "../../../components/button";
-import { DateRange, DayPicker } from "react-day-picker"
+import {today, getLocalTimeZone} from "@internationalized/date"
+import {RangeCalendar} from "@nextui-org/calendar";
 import { format } from "date-fns"
-import { useState } from "react";
+import React, { useState } from "react";
+import {RangeValue, DateValue} from "@nextui-org/react"
+import { Modal } from "../../../components/modal";
 import "react-day-picker/dist/style.css"
 
 interface DestinationAndDateStepProps {
-    setEventStartAndEndDates: (dates: DateRange | undefined) => void
+    setEventStartAndEndDates: React.Dispatch<React.SetStateAction<RangeValue<DateValue> | undefined>>
     isGuestsInputOpen: boolean
     closeGuestsInput: () => void
     openGuestsInput: () => void
     setDestination: (destination: string) => void
-    eventStartAndEndDates: DateRange | undefined
-
+    eventStartAndEndDates:  RangeValue<DateValue> | undefined
 }
 
-export function DestinationAndDateStep({closeGuestsInput, isGuestsInputOpen, openGuestsInput, setDestination, setEventStartAndEndDates, eventStartAndEndDates }: DestinationAndDateStepProps){
+
+export function DestinationAndDateStep({
+  closeGuestsInput, 
+  isGuestsInputOpen, 
+  openGuestsInput, 
+  setDestination, 
+  setEventStartAndEndDates, 
+  eventStartAndEndDates }: DestinationAndDateStepProps){
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
 
 
@@ -27,8 +36,11 @@ export function DestinationAndDateStep({closeGuestsInput, isGuestsInputOpen, ope
   }
 
 
-  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.from && eventStartAndEndDates.to 
-  ? format(eventStartAndEndDates.from, "d ' de 'LLL").concat(" até ").concat(format(eventStartAndEndDates.to, "d ' de 'LLL")): null
+  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.start && eventStartAndEndDates.end 
+    ? format(eventStartAndEndDates.start.toDate(getLocalTimeZone()), "d ' de 'LLL")
+      .concat(" até ")
+      .concat(format(eventStartAndEndDates.end.toDate(getLocalTimeZone()), "d ' de 'LLL"))
+    : null
   
 
 
@@ -59,22 +71,21 @@ export function DestinationAndDateStep({closeGuestsInput, isGuestsInputOpen, ope
 
 
           {isDatePickerOpen && (
-            <div className="fixed inset-0 bg-black/60 flex items-center justify-center">
-            <div className="rounded-xl py-5 px-6 shadow-shape bg-zinc-900 space-y-5">
-    
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg">Selecione a Data</h2>
-    
-                  <button onClick={closeDatePicker} type="button">
-                    <X className="size-5 text-zinc-400"/>
-                  </button>
-                </div>
-            </div>
-    
-              <DayPicker mode="range" selected={eventStartAndEndDates} onSelect={setEventStartAndEndDates}/>
-            </div>
-          </div>
+            <Modal
+              title="Selecione a Data"
+              description=""
+              size="none"
+              onCloseModal={closeDatePicker}
+            >
+               <RangeCalendar 
+                  color="secondary"
+                  aria-label="Date (No Selection)"
+                  minValue={today(getLocalTimeZone())}
+                  value={eventStartAndEndDates}
+                  onChange={setEventStartAndEndDates}
+               />
+
+            </Modal>
           )}
 
           <div className="w-px h-6 bg-zinc-800" />
@@ -93,6 +104,8 @@ export function DestinationAndDateStep({closeGuestsInput, isGuestsInputOpen, ope
               <ArrowRight className="text-lime-950 size-5" />
             </Button>
           )}
+
+          
 
         </div>
     )

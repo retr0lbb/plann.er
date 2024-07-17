@@ -4,8 +4,10 @@ import { InviteGuestsModal } from "./invite-guests-modal";
 import { ConfirmTripModal } from "./confirm-trip-modal";
 import { DestinationAndDateStep } from "./steps/destination-and-date-step";
 import { InviteGuestsStep } from "./steps/invite-guests-step";
-import { DateRange } from "react-day-picker";
 import { api } from "../../lib/axios";
+import { DateValue, RangeValue } from "@nextui-org/react";
+import dayjs from "dayjs";
+import { getLocalTimeZone } from "@internationalized/date";
 
 enum MODAL{
   NONE = 0,
@@ -22,7 +24,7 @@ export function CreateTripPage() {
   const [destination, setDestination] = useState("");
   const [ownerName, setOwnerName]  = useState("");
   const [ownerEmail, setOwnerEmail]  = useState("");
-  const [eventStartAndEndDates, setEventStartAndEndDates] = useState<DateRange | undefined>();  
+  const [startsAndEndDate, setStartsAndEndDate] = useState<RangeValue<DateValue>>() 
 
 
 
@@ -68,9 +70,9 @@ export function CreateTripPage() {
     console.log(ownerEmail)
     console.log(ownerName)
     console.log(emailsToInvite)
-    console.log(eventStartAndEndDates)
+    console.log(dayjs(startsAndEndDate?.start.toDate(getLocalTimeZone())).toISOString())
 
-    if(eventStartAndEndDates?.from ===   undefined || eventStartAndEndDates.to === undefined  ){
+    if(startsAndEndDate?.end === undefined || startsAndEndDate.start === undefined || !startsAndEndDate){
       return
     }
     if(!destination){
@@ -85,8 +87,8 @@ export function CreateTripPage() {
 
     const response = await api.post('/trips', {
         destination: destination,
-        starts_at: eventStartAndEndDates.from,
-        ends_at: eventStartAndEndDates.to,
+        starts_at: dayjs(startsAndEndDate.start.toDate(getLocalTimeZone())).toISOString(),
+        ends_at: dayjs(startsAndEndDate.end.toDate(getLocalTimeZone())).toISOString(),
         emails_to_invite: emailsToInvite,
         owner_name: ownerName,
         owner_email: ownerEmail
@@ -94,6 +96,7 @@ export function CreateTripPage() {
 
     const {data} = response.data
 
+    console.log(dayjs(startsAndEndDate.start.toDate(getLocalTimeZone())).toISOString())
     navigate(`/trips/${data}`)
   }
 
@@ -113,8 +116,8 @@ export function CreateTripPage() {
         <DestinationAndDateStep 
             openGuestsInput={()=> setIsGuestsInputOpen(true)}
             closeGuestsInput={()=> setIsGuestsInputOpen(false)}
-            eventStartAndEndDates={eventStartAndEndDates}
-            setEventStartAndEndDates={setEventStartAndEndDates}
+            eventStartAndEndDates={startsAndEndDate}
+            setEventStartAndEndDates={setStartsAndEndDate}
             setDestination={setDestination}
             isGuestsInputOpen={isGuestsInputOpen}
 

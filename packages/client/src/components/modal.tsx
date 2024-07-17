@@ -33,7 +33,7 @@ export function Modal({children, size, title, description, className ,onCloseMod
         <div className={modalVariants({size, className})} {...rest}>
             <header className="space-y-2">
                 <div className="flex items-center">
-                    <h2 className="text-lg flex-1">{title}</h2>
+                    <h2 className="text-lg text-left flex-1">{title}</h2>
 
                     {onCloseModal  
                         ? (<button onClick={onCloseModal} type="button">
