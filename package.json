@@ -6,7 +6,8 @@
   "packageManager": "npm@10.1.0",
   "scripts": {
     "start": "turbo start",
-    "build": "turbo build"
+    "build": "turbo build",
+    "dev": "turbo dev"
   },
   "keywords": [],
   "workspaces": [
