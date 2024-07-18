@@ -74,19 +74,25 @@ export function DestinationAndDateStep({
               size="none"
               onCloseModal={closeDatePicker}
             >
+              
                <RangeCalendar 
-                  color="secondary"
+                  classNames={{
+                    base: "border-none shadow-none w-full h-full",
+                    cell: ""
+                  }}
+                  calendarWidth={"100%"}
+                  color="primary"
                   aria-label="Date (No Selection)"
-                  minValue={today(getLocalTimeZone())}
+                  minValue={today(getLocalTimeZone()).add({
+                    days: 1
+                  })}
                   value={eventStartAndEndDates}
                   onChange={setEventStartAndEndDates}
                />
 
             </Modal>
           )}
-
           <div className="w-px h-6 bg-zinc-800" />
-
           {isGuestsInputOpen ? (
             <Button
             variant="secondary"

@@ -26,14 +26,11 @@ export default {
   plugins: [nextui({
     defaultTheme: "dark",
     themes: {
-      light: {
-        // ...
-      },
       dark: {
         // ...
         colors: {
           primary: {
-            DEFAULT: "#bef264"
+            DEFAULT: "#84cc16"
           },
           secondary: {
             DEFAULT: "#1a2e05"
