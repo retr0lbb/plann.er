@@ -28,8 +28,8 @@ export function Activities(){
                 return(
                 <div key={activity.date} className="space-y-2.5">
                     <div className="flex gap-2 items-baseline">
-                        <span className="text-xl text-zinc-300 font-semibold">Dia {dayjs(activity.date).format("d")}</span>
-                        <span className="text-xs text-zinc-500">{dayjs(activity.date).format("dddd")}</span>
+                        <span className="text-xl text-zinc-300 font-semibold">Dia {dayjs(activity.date).format("D")}</span>
+                        <span className="text-xs text-zinc-500">{dayjs(activity.date).format("dddd").replace("-feira", "")}</span>
                     </div>
                     {activity.activities.length <= 0? (
                         <p className="text-sm text-zinc-500">Nenhuma atividade cadastrada nessa data.</p>
