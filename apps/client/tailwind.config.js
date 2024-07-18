@@ -23,6 +23,24 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [nextui()]
+  plugins: [nextui({
+    defaultTheme: "dark",
+    themes: {
+      light: {
+        // ...
+      },
+      dark: {
+        // ...
+        colors: {
+          primary: {
+            DEFAULT: "#bef264"
+          },
+          secondary: {
+            DEFAULT: "#1a2e05"
+          }
+        },
+      },
+    }
+  })]
 }
 

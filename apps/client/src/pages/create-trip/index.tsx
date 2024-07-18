@@ -19,6 +19,8 @@ export function CreateTripPage() {
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
 
+  const [isCreatingTrip, setIsCreatingTrip] = useState(false)
+
   const [showModal, setShowModal] = useState(MODAL.NONE)
 
   const [destination, setDestination] = useState("");
@@ -66,12 +68,6 @@ export function CreateTripPage() {
   async function createTrip(e: FormEvent<HTMLFormElement>){
     e.preventDefault()
 
-    console.log(destination)
-    console.log(ownerEmail)
-    console.log(ownerName)
-    console.log(emailsToInvite)
-    console.log(dayjs(startsAndEndDate?.start.toDate(getLocalTimeZone())).toISOString())
-
     if(startsAndEndDate?.end === undefined || startsAndEndDate.start === undefined || !startsAndEndDate){
       return
     }
@@ -84,8 +80,10 @@ export function CreateTripPage() {
     if(emailsToInvite.length === 0){
       return
     }
+    setIsCreatingTrip(true)
 
-    const response = await api.post('/trips', {
+    try {
+      const response = await api.post('/trips', {
         destination: destination,
         starts_at: dayjs(startsAndEndDate.start.toDate(getLocalTimeZone())).toISOString(),
         ends_at: dayjs(startsAndEndDate.end.toDate(getLocalTimeZone())).toISOString(),
@@ -98,6 +96,13 @@ export function CreateTripPage() {
 
     console.log(dayjs(startsAndEndDate.start.toDate(getLocalTimeZone())).toISOString())
     navigate(`/trips/${data}`)
+
+    } catch (error) {
+      console.log(error)
+    }finally{
+      setIsCreatingTrip(false)
+    }
+
   }
 
   return (
@@ -124,11 +129,12 @@ export function CreateTripPage() {
         />
 
 
-        {isGuestsInputOpen && <InviteGuestsStep
-                                  OpenGuestsModal={setModalToGuestModal}
-                                  openConfirmTripModal={openConfirmTripModal}
-                                  emailsToInvite={emailsToInvite}
-                                />}
+        {isGuestsInputOpen && 
+          <InviteGuestsStep
+            OpenGuestsModal={setModalToGuestModal}
+            openConfirmTripModal={openConfirmTripModal}
+            emailsToInvite={emailsToInvite}
+          />}
         </div>
 
         <p className="text-sm text-zinc-500">
@@ -159,7 +165,8 @@ export function CreateTripPage() {
                                     CloseIsConfirmTripModal={setModalToNone}
                                     setOwnerName={setOwnerName}
                                     setOwnerEmail={setOwnerEmail}
-                                    createTrip={createTrip} 
+                                    createTrip={createTrip}
+                                    isFetching={isCreatingTrip}
                                 />}
     </div>
   );

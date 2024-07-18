@@ -2,15 +2,23 @@ import { Mail, User } from "lucide-react";
 import { FormEvent } from "react";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
+import { Spinner } from "../../components/spinner";
 
 interface ConfirmTripModalProps{
     CloseIsConfirmTripModal: () => void
     createTrip: (event: FormEvent<HTMLFormElement>) => void
     setOwnerName: (ownerName: string)  => void
     setOwnerEmail: (ownerEmail: string) => void
+    isFetching: boolean
 }
 
-export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip, setOwnerEmail, setOwnerName}: ConfirmTripModalProps){
+export function ConfirmTripModal({
+  CloseIsConfirmTripModal, 
+  createTrip, 
+  setOwnerEmail, 
+  setOwnerName,
+  isFetching
+}: ConfirmTripModalProps){
     return(
       <Modal
         title="Confirmar criação de viagem"
@@ -41,12 +49,14 @@ export function ConfirmTripModal({CloseIsConfirmTripModal, createTrip, setOwnerE
               />  
             </div>
 
+
             <Button
               size="full"
               variant="primary"
               type="submit"
+              disabled={!isFetching}
             >
-                Confirmar criação da viagem
+                {!isFetching ? <Spinner size="md" color="secondary"/> : "Confirmar criação da viagem"}
             </Button>
           </form>
       </Modal>
