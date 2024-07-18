@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "main": "index.js",
   "packageManager": "npm@10.1.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "turbo start",
+    "build": "turbo build"
   },
   "keywords": [],
   "workspaces": [
