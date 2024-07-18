@@ -2,11 +2,11 @@ import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { Button } from "../../../components/button";
 import {today, getLocalTimeZone} from "@internationalized/date"
 import {RangeCalendar} from "@nextui-org/calendar";
-import { format } from "date-fns"
 import React, { useState } from "react";
 import {RangeValue, DateValue} from "@nextui-org/react"
 import { Modal } from "../../../components/modal";
 import "react-day-picker/dist/style.css"
+import {dayjs} from "../../../lib/dayjs-config"
 
 interface DestinationAndDateStepProps {
     setEventStartAndEndDates: React.Dispatch<React.SetStateAction<RangeValue<DateValue> | undefined>>
@@ -16,7 +16,6 @@ interface DestinationAndDateStepProps {
     setDestination: (destination: string) => void
     eventStartAndEndDates:  RangeValue<DateValue> | undefined
 }
-
 
 export function DestinationAndDateStep({
   closeGuestsInput, 
@@ -35,12 +34,8 @@ export function DestinationAndDateStep({
     setIsDatePickerOpen(false)
   }
 
-
-  const displayedDate = eventStartAndEndDates && eventStartAndEndDates.start && eventStartAndEndDates.end 
-    ? format(eventStartAndEndDates.start.toDate(getLocalTimeZone()), "d ' de 'LLL")
-      .concat(" até ")
-      .concat(format(eventStartAndEndDates.end.toDate(getLocalTimeZone()), "d ' de 'LLL"))
-    : null
+  const startDisplayDate = dayjs(eventStartAndEndDates?.start.toDate(getLocalTimeZone())).format("DD MMM")
+  const endDisplayDate = dayjs(eventStartAndEndDates?.end.toDate(getLocalTimeZone())).format("DD MMM")
   
 
 
@@ -65,7 +60,10 @@ export function DestinationAndDateStep({
             <span
               className="text-lg text-zinc-400 w-40 flex-1"
             >
-              {displayedDate || "Quando"}
+              {eventStartAndEndDates?.start !== undefined 
+                ? `de ${startDisplayDate.toString()} até ${endDisplayDate.toString()}`
+                : "Quando?"
+              }
             </span>
           </button>
 
