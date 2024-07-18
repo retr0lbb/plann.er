@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { CreateTripPage } from "./pages/create-trip";
 import { TripDetailsPage } from "./pages/trip-details";
+import { TestRoute } from "./components/test-route";
 
 const router = createBrowserRouter([
   {
@@ -10,6 +11,10 @@ const router = createBrowserRouter([
   {
     path: "/trips/:tripId",
     element: <TripDetailsPage />
+  },
+  {
+    path: "test/:testId",
+    element: <TestRoute />
   }
 ]);
 
