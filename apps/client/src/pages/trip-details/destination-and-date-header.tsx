@@ -3,7 +3,7 @@ import { Button } from "../../components/button";
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { api } from "../../lib/axios";
-import {dayjs} from "../../lib/dayjs-config";
+import { dayjs } from "../../lib/dayjs-config";
 
 
 export interface TripDetails{

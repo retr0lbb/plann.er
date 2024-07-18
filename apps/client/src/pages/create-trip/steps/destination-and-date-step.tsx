@@ -1,11 +1,10 @@
 import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
 import { Button } from "../../../components/button";
-import {today, getLocalTimeZone} from "@internationalized/date"
-import {RangeCalendar} from "@nextui-org/calendar";
+import { today, getLocalTimeZone } from "@internationalized/date"
+import { RangeCalendar } from "@nextui-org/calendar";
 import React, { useState } from "react";
-import {RangeValue, DateValue} from "@nextui-org/react"
+import { RangeValue, DateValue } from "@nextui-org/react"
 import { Modal } from "../../../components/modal";
-import "react-day-picker/dist/style.css"
 import {dayjs} from "../../../lib/dayjs-config"
 
 interface DestinationAndDateStepProps {
