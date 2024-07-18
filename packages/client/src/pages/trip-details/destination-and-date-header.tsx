@@ -3,7 +3,7 @@ import { Button } from "../../components/button";
 import { useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import { api } from "../../lib/axios";
-import { format } from "date-fns";
+import {dayjs} from "../../lib/dayjs-config";
 
 
 export interface TripDetails{
@@ -24,9 +24,10 @@ export function DestinationAndDateHeader(){
         api.get(`/trips/${tripId}`).then(response => setTrip(response.data.tripDetails))
     }, [tripId])
 
-    const displayedDate = trip
-        ? format(trip.starts_at, "d ' de 'LLL").concat(" até ").concat(format(trip.ends_at, "d ' de 'LLL"))
-        : null
+    const startDisplayDate = dayjs(trip?.starts_at).format("DD MMM")
+    const endDisplayDate = dayjs(trip?.ends_at).format("DD MMM")
+
+    const displayedDate = trip?.starts_at !== undefined ? `${startDisplayDate} até ${endDisplayDate}` : null
     
 
     return(

@@ -2,8 +2,7 @@ import { CircleCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import { api } from "../../lib/axios";
 import { useParams } from "react-router-dom";
-import { format } from "date-fns";
-import {ptBR} from "date-fns/locale"
+import {dayjs} from "../../lib/dayjs-config";
 
 interface Activity{
     date: string,
@@ -29,8 +28,8 @@ export function Activities(){
                 return(
                 <div key={activity.date} className="space-y-2.5">
                     <div className="flex gap-2 items-baseline">
-                        <span className="text-xl text-zinc-300 font-semibold">Dia {format(activity.date, "d")}</span>
-                        <span className="text-xs text-zinc-500">{format(activity.date, "EEEE", { locale: ptBR})}</span>
+                        <span className="text-xl text-zinc-300 font-semibold">Dia {dayjs(activity.date).format("d")}</span>
+                        <span className="text-xs text-zinc-500">{dayjs(activity.date).format("dddd")}</span>
                     </div>
                     {activity.activities.length <= 0? (
                         <p className="text-sm text-zinc-500">Nenhuma atividade cadastrada nessa data.</p>
@@ -41,7 +40,7 @@ export function Activities(){
                                         <div className="px-4 py-2.5 bg-zinc-900 rounded-xl shadow-shape flex items-center gap-3">
                                             <CircleCheck className="size-5 text-lime-300" />
                                             <span className="text-zinc-100">{atv.title}</span>
-                                            <span className="text-zinc-400 text-sm ml-auto">{format(atv.occurs_at, "HH:mm")}h</span>
+                                            <span className="text-zinc-400 text-sm ml-auto">{dayjs(atv.occurs_at).format("HH:mm'h'")}h</span>
                                         </div>
                                     </div>
                                 )
