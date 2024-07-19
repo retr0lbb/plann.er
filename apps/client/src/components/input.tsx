@@ -16,11 +16,15 @@ const WrapperVariants = tv({
         variation: {
             primary: "",
             secondary: "h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg"
+        },
+        lenght: {
+            full: "flex-1"
         }
     },
 
     defaultVariants: {
-        variation: "primary"
+        variation: "primary",
+        size: "full"
     }
 })
 
@@ -39,9 +43,9 @@ const InputVariants  = tv({
 
 
 
-export function Input({children, classNames, variation = "primary", ...rest}: InputProps){
+export function Input({children, classNames, lenght, variation = "primary", ...rest}: InputProps){
     return(
-        <div className={WrapperVariants({variation, className: classNames?.wrapperClassName})}>
+        <div className={WrapperVariants({variation, lenght, className: classNames?.wrapperClassName})}>
             {children}
             <input
               className={InputVariants({inputVariation: "primary", className: classNames?.inputClassName})}

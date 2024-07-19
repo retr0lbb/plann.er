@@ -44,6 +44,7 @@ export function DestinationAndDateStep({
         <div className="h-16 px-4 bg-zinc-900 rounded-xl overflow-hidden flex items-center shadow-shape gap-3">
 
           <Input 
+            lenght="full"
             disabled={isGuestsInputOpen}
             onChange={(e) => setDestination(e.target.value)}
             type="text"
@@ -51,6 +52,8 @@ export function DestinationAndDateStep({
           >
             <MapPin className="size-5 text-zinc-400" />
           </Input>
+
+          
 
           <button onClick={openDatePicker} disabled={isGuestsInputOpen} className="flex items-center gap-2 text-left w-[240px]">
             <Calendar className="size-5 text-zinc-400" />
