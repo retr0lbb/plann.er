@@ -18,17 +18,12 @@ enum MODAL{
 export function CreateTripPage() {
   const [isGuestsInputOpen, setIsGuestsInputOpen] = useState(false);
   const [emailsToInvite, setEmailsToInvite] = useState<string[]>([]);
-
   const [isCreatingTrip, setIsCreatingTrip] = useState(false)
-
   const [showModal, setShowModal] = useState(MODAL.NONE)
-
   const [destination, setDestination] = useState("");
   const [ownerName, setOwnerName]  = useState("");
   const [ownerEmail, setOwnerEmail]  = useState("");
   const [startsAndEndDate, setStartsAndEndDate] = useState<RangeValue<DateValue>>() 
-
-
 
   const navigate = useNavigate()
 
@@ -44,6 +39,7 @@ export function CreateTripPage() {
     setShowModal(MODAL.CONFIRM_TRIP)
   }
 
+  const formattedDates = `${dayjs(startsAndEndDate?.start.toDate(getLocalTimeZone())).format("DD [de] MMMM")} até ${dayjs(startsAndEndDate?.end.toDate(getLocalTimeZone())).format("DD [de] MMMM")}`
 
   function addNewEmailToInvite(e: FormEvent<HTMLFormElement>){
     e.preventDefault();
@@ -94,7 +90,6 @@ export function CreateTripPage() {
 
     const {data} = response.data
 
-    console.log(dayjs(startsAndEndDate.start.toDate(getLocalTimeZone())).toISOString())
     navigate(`/trips/${data}`)
 
     } catch (error) {
@@ -161,13 +156,16 @@ export function CreateTripPage() {
 
       {/* modalda3 */}
 
-      {showModal === MODAL.CONFIRM_TRIP && <ConfirmTripModal
-                                    CloseIsConfirmTripModal={setModalToNone}
-                                    setOwnerName={setOwnerName}
-                                    setOwnerEmail={setOwnerEmail}
-                                    createTrip={createTrip}
-                                    isFetching={isCreatingTrip}
-                                />}
+      {showModal === MODAL.CONFIRM_TRIP 
+      && <ConfirmTripModal
+            CloseIsConfirmTripModal={setModalToNone}
+            setOwnerName={setOwnerName}
+            setOwnerEmail={setOwnerEmail}
+            createTrip={createTrip}
+            isFetching={isCreatingTrip}
+            destination={destination}
+            formatedDates={formattedDates}
+        />}
     </div>
   );
 }

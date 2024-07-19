@@ -54,7 +54,7 @@ export function Modal({children, size, title, description, className ,onCloseMod
                     }
                 </div>
 
-                <p className="text-sm text-zinc-500">{description}</p>
+                <div className="text-sm text-zinc-500">{description}</div>
             </header>
 
             {children}
