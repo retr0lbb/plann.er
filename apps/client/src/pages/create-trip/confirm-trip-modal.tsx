@@ -3,6 +3,7 @@ import { FormEvent } from "react";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
 import { Spinner } from "../../components/spinner";
+import { Input } from "../../components/input";
 
 interface ConfirmTripModalProps{
     CloseIsConfirmTripModal: () => void
@@ -38,7 +39,17 @@ export function ConfirmTripModal({
               />  
             </div>
 
-            <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
+            <Input
+              variation="secondary"
+              type="email"
+              name="email"
+              placeholder="Seu e-mail pessoal."
+              onChange={ e => setOwnerEmail(e.target.value)}
+            >
+              <Mail className="text-zinc-400 size-5" />
+            </Input>
+
+            {/* <div className="h-14 px-4 bg-zinc-950 border border-zinc-800 rounded-lg flex items-center gap-2">
               <Mail className="text-zinc-400 size-5" />
               <input
                 onChange={ e => setOwnerEmail(e.target.value)}
@@ -47,16 +58,16 @@ export function ConfirmTripModal({
                 placeholder= "Seu e-mail pessoal"
                 className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
               />  
-            </div>
+            </div> */}
 
 
             <Button
               size="full"
               variant="primary"
               type="submit"
-              disabled={!isFetching}
+              disabled={isFetching}
             >
-                {!isFetching ? <Spinner size="md" color="secondary"/> : "Confirmar criação da viagem"}
+                {isFetching ? <Spinner size="md" color="secondary"/> : "Confirmar criação da viagem"}
             </Button>
           </form>
       </Modal>

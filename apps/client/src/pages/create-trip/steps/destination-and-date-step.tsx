@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { RangeValue, DateValue } from "@nextui-org/react"
 import { Modal } from "../../../components/modal";
 import {dayjs} from "../../../lib/dayjs-config"
+import { Input } from "../../../components/input";
 
 interface DestinationAndDateStepProps {
     setEventStartAndEndDates: React.Dispatch<React.SetStateAction<RangeValue<DateValue> | undefined>>
@@ -41,18 +42,15 @@ export function DestinationAndDateStep({
 
     return(
         <div className="h-16 px-4 bg-zinc-900 rounded-xl overflow-hidden flex items-center shadow-shape gap-3">
-          <div className="flex items-center gap-2 flex-1">
+
+          <Input 
+            disabled={isGuestsInputOpen}
+            onChange={(e) => setDestination(e.target.value)}
+            type="text"
+            placeholder="Para onde você vai?"
+          >
             <MapPin className="size-5 text-zinc-400" />
-            
-            <input
-              disabled={isGuestsInputOpen}
-              onChange={(e) => setDestination(e.target.value)}
-              type="text"
-              placeholder="Para onde você vai?"
-              className="bg-transparent text-lg placeholder-zinc-400 outline-none flex-1"
-              
-            />
-          </div>
+          </Input>
 
           <button onClick={openDatePicker} disabled={isGuestsInputOpen} className="flex items-center gap-2 text-left w-[240px]">
             <Calendar className="size-5 text-zinc-400" />
@@ -93,6 +91,7 @@ export function DestinationAndDateStep({
             </Modal>
           )}
           <div className="w-px h-6 bg-zinc-800" />
+
           {isGuestsInputOpen ? (
             <Button
             variant="secondary"

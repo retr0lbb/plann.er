@@ -30,7 +30,17 @@ const modalVariants = tv({
 
 export function Modal({children, size, title, description, className ,onCloseModal, ...rest}: ModalProps){
     return(
-        <motion.div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+        <motion.div 
+            initial={{
+                scale: 0,
+                opacity: 0
+            }}
+            animate={{
+                scale: 1,
+                opacity: 1
+            }}
+            className="absolute inset-0 bg-black/70 flex items-center justify-center"
+        >
         <div className={modalVariants({size, className})} {...rest}>
             <header className="space-y-2">
                 <div className="flex items-center">

@@ -32,9 +32,9 @@ interface ButtonProps extends React.ComponentProps<"button">, VariantProps<typeo
     children: React.ReactNode,
 }
 
-export function Button({children, variant, size, disabled, ...rest}:ButtonProps){
+export function Button({children, variant, size, disabled, className, ...rest}:ButtonProps){
     return(
-        <button {...rest} className={buttonVariant({ variant: variant, size: size, isDisable: disabled})} disabled={disabled}>
+        <button {...rest} className={buttonVariant({ variant: variant, size: size, isDisable: disabled, className})} disabled={disabled}>
             {children}
         </button>
     )
