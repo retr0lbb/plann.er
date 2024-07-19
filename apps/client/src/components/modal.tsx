@@ -1,6 +1,7 @@
 import { VariantProps } from "@nextui-org/react";
 import { X } from "lucide-react";
-import {tv} from "tailwind-variants"
+import { tv } from "tailwind-variants"
+import {motion} from "framer-motion"
 
 interface ModalProps extends React.ComponentProps<"div">, VariantProps<typeof modalVariants>{
     onCloseModal?: () => void;
@@ -29,7 +30,7 @@ const modalVariants = tv({
 
 export function Modal({children, size, title, description, className ,onCloseModal, ...rest}: ModalProps){
     return(
-        <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+        <motion.div className="absolute inset-0 bg-black/70 flex items-center justify-center">
         <div className={modalVariants({size, className})} {...rest}>
             <header className="space-y-2">
                 <div className="flex items-center">
@@ -48,6 +49,6 @@ export function Modal({children, size, title, description, className ,onCloseMod
 
             {children}
         </div>
-    </div>
+    </motion.div>
     )
 }
