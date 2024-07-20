@@ -94,6 +94,7 @@ export function CreateTripPage() {
 
     } catch (error) {
       console.log(error)
+      console.log(import.meta.env.BASE_URL)
     }finally{
       setIsCreatingTrip(false)
     }
