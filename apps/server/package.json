@@ -2,7 +2,7 @@
   "name": "@travel/server",
   "version": "1.0.0",
   "description": "",
-  "main": "/dist/server.js",
+  "main": "./dist/server.js",
   "scripts": {
     "dev": "tsx watch --env-file .env src/server.ts",
     "build": "tsup src/server.ts --out-dir dist --format cjs",
@@ -24,6 +24,7 @@
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
     "nodemailer": "^6.9.14",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "tsup": "^8.1.2"
   }
 }
