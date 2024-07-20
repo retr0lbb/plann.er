@@ -49,3 +49,5 @@ app.get("/", () => {
 app.listen({ port: env.PORT, host: "0.0.0.0"}).then(() => {
     console.log("server running")
 })
+
+export default app
