@@ -1,18 +1,18 @@
 import fastify from "fastify";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 import cors from "@fastify/cors"
-import createTrip from "./routes/create-trip";
-import confirmTrip from "./routes/confirm-trip";
-import confirmParticipantsInTrip from "./routes/confirm-participant";
+import createTrip from "./routes/trips/create-trip";
+import confirmTrip from "./routes/trips/confirm-trip";
+import confirmParticipantsInTrip from "./routes/participants/confirm-participant";
 import createActivity from "./routes/activities/create-activity";
 import getActivities from "./routes/activities/get-activities";
 import createLink from "./routes/links/create-link";
 import getLinks from "./routes/links/get-links";
-import getParticipants from "./routes/get-participants";
-import createInvite from "./routes/create-invite";
-import UpdateTrip from "./routes/update-trip";
-import getTripDetails from "./routes/get-trip-details";
-import getParticipant from "./routes/get-participant";
+import getParticipants from "./routes/trips/get-trip-participants";
+import createInvite from "./routes/trips/create-invite";
+import UpdateTrip from "./routes/trips/update-trip";
+import getTripDetails from "./routes/trips/get-trip-details";
+import getParticipant from "./routes/participants/get-participant";
 import { errorHandler } from "./error-handler";
 import { env } from "./env";
 
