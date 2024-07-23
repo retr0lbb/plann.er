@@ -1,7 +1,8 @@
-import { AtSign, Plus, X } from "lucide-react"
+import { AtSign, Frown, Plus, X } from "lucide-react"
 import { FormEvent } from "react"
 import { Button } from "../../components/button"
 import { Modal } from "../../components/modal"
+import { AnimatePresence, motion } from "framer-motion"
 
 
 interface InviteGuestsModalProps {
@@ -21,14 +22,38 @@ export function InviteGuestsModal({CloseGuestsModal, addNewEmailToInvite, emails
         size="lg"
       >
         <div className="flex flex-wrap gap-2">
-            
+            <AnimatePresence>
             {emailsToInvite.map((email) => {
               return(
-                <div key={email} className="py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2">
+                <motion.div 
+                  key={email} 
+                  className="py-1.5 px-2.5 rounded-md bg-zinc-800 flex items-center gap-2"
+                  initial={{
+                    opacity: 0,
+                    y: 100
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y:0
+                  }}
+                  exit={{
+                    scale: 0,
+                    opacity: 0,
+                    rotateY: 12,
+                    rotateX: 32,
+                  }}
+                >
                   <span className="text-zinc-300">{email}</span> <button type="button" onClick={() => removeEmailFromList(email)}><X className="size-4"/></button>
-                </div>
+                </motion.div>
               )
           })}
+          {emailsToInvite.length === 0 && (
+            <div className="flex items-center justify-center gap-2 w-full p-5">
+              <Frown size={32} className="text-zinc-600" />
+              <p className="text-zinc-600 text-lg text-center">Não há pessoas convidadas para essa viagem</p>
+            </div>
+          )}
+          </AnimatePresence>
 
           </div>
 
