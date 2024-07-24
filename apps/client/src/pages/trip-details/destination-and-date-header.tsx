@@ -15,7 +15,7 @@ export interface TripDetails{
 }
 
 
-export function DestinationAndDateHeader(){
+export function DestinationAndDateHeader(props: {handleEditTripDetails: () => void}){
 
     const {tripId} = useParams()
     const [trip, setTrip] = useState<TripDetails | undefined>()
@@ -42,7 +42,7 @@ export function DestinationAndDateHeader(){
                     <span className="text-zinc-100">{displayedDate}</span>
                 </div>
                 <div className="w-px h-6 bg-zinc-800" />
-                <Button variant="secondary">
+                <Button onClick={() => props.handleEditTripDetails()} variant="secondary">
                     Alterar local/data
                     <Settings2 className="size-5"/>
                 </Button>

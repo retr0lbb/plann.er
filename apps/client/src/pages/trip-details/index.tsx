@@ -6,23 +6,26 @@ import { GuestList } from "./guest-list";
 import { Activities } from "./activities";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Button } from "../../components/button";
+import { CreateLinkModal } from "./create-link-modal";
 
+
+enum MODAL{
+    NONE = 0,
+    CREATE_ACTIVITY = 1,
+    CREATE_LINKS = 2
+}
 
 export function TripDetailsPage(){
-    const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] = useState<boolean>(false)
+    const [showModal, setShowModal] = useState(MODAL.NONE)
 
-    function openCreateActivityModal(){
-        setIsCreateActivityModalOpen(true)
+    function openCreateLinkModal(){
+        setShowModal(MODAL.CREATE_LINKS)
     }
-    function closeCreateActivityModal(){
-        setIsCreateActivityModalOpen(false)
-    }
-
 
     return(
         <div className="max-w-6xl min-h-screen px-6 py-10 mx-auto space-y-8">
 
-            <DestinationAndDateHeader />
+            <DestinationAndDateHeader  handleEditTripDetails={()=>{}}/>
 
             <main className="flex gap-16 px-4">
                 <div className="flex-1 space-y-6">
@@ -30,7 +33,7 @@ export function TripDetailsPage(){
                         <h2 className="text-3xl font-semibold">Atividades</h2>
                          
                         <Button
-                            onClick={openCreateActivityModal}
+                            onClick={() => setShowModal(MODAL.CREATE_ACTIVITY)}
                         >
                                 <Plus className="text-lime-950 size-5" />
                                 Cadastrar atividade
@@ -41,14 +44,21 @@ export function TripDetailsPage(){
                 </div>
 
                 <div className="w-80 space-y-6">
-                    <ImportantLinks />
+                    <ImportantLinks openCreateLinkModal={openCreateLinkModal} />
                     <div className="w-full h-px bg-zinc-800" />
                     <GuestList />
                 </div>
             </main>
 
 
-            {isCreateActivityModalOpen && <CreateActivityModal closeCreateActivityModal={closeCreateActivityModal} />}
+            {
+                showModal === MODAL.CREATE_ACTIVITY 
+                && <CreateActivityModal closeCreateActivityModal={() => setShowModal(MODAL.NONE)} />
+            }
+            {
+                showModal === MODAL.CREATE_LINKS    
+                && <CreateLinkModal onCloseModal={()=> setShowModal(MODAL.NONE)} />
+            }
         </div>
     )
 }
