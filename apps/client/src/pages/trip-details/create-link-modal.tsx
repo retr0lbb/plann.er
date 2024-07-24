@@ -10,7 +10,7 @@ interface createLinkModalProps{
 }
 
 export function CreateLinkModal({onCloseModal}: createLinkModalProps){
-    const {tripId} = useParams()
+    const { tripId } = useParams();
     
     async function createLink(event: FormEvent<HTMLFormElement>){
         event.preventDefault()
@@ -30,6 +30,7 @@ export function CreateLinkModal({onCloseModal}: createLinkModalProps){
 
     return(
         <Modal
+          size="lg"
           title="Criar link importante."
           description="Todos os links importantes ficam visiveis para todos os participantes."
           onCloseModal={onCloseModal}

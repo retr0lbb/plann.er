@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import { api } from "../../lib/axios"
 
 
-interface Participants{
+export interface Participants{
     id: string
     name: string | null,
     email: string,
@@ -13,7 +13,7 @@ interface Participants{
 }
 
 
-export function GuestList(){
+export function GuestList({openManageParticipantsModal}: {openManageParticipantsModal: ()=> void}){
     const {tripId} = useParams()
     const [participants, setParticipants] = useState<Participants[]>([])
 
@@ -46,7 +46,7 @@ export function GuestList(){
                 
                 </div>
 
-            <Button size="full" variant="secondary">
+            <Button onClick={openManageParticipantsModal} size="full" variant="secondary">
                 <UserCog className="text-zinc-200 size-5" />
                 Gerenciar convidados
             </Button>

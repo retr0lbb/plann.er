@@ -7,12 +7,14 @@ import { Activities } from "./activities";
 import { DestinationAndDateHeader } from "./destination-and-date-header";
 import { Button } from "../../components/button";
 import { CreateLinkModal } from "./create-link-modal";
+import { InviteOrRemoveParticipantsModal } from "./invite-remove-participants-modal";
 
 
 enum MODAL{
     NONE = 0,
     CREATE_ACTIVITY = 1,
-    CREATE_LINKS = 2
+    CREATE_LINKS = 2,
+    MANAGE_PARTICIPANTS = 3
 }
 
 export function TripDetailsPage(){
@@ -20,6 +22,9 @@ export function TripDetailsPage(){
 
     function openCreateLinkModal(){
         setShowModal(MODAL.CREATE_LINKS)
+    }
+    function openManageParticipantsModal(){
+        setShowModal(MODAL.MANAGE_PARTICIPANTS)
     }
 
     return(
@@ -46,7 +51,7 @@ export function TripDetailsPage(){
                 <div className="w-80 space-y-6">
                     <ImportantLinks openCreateLinkModal={openCreateLinkModal} />
                     <div className="w-full h-px bg-zinc-800" />
-                    <GuestList />
+                    <GuestList openManageParticipantsModal={openManageParticipantsModal} />
                 </div>
             </main>
 
@@ -58,6 +63,10 @@ export function TripDetailsPage(){
             {
                 showModal === MODAL.CREATE_LINKS    
                 && <CreateLinkModal onCloseModal={()=> setShowModal(MODAL.NONE)} />
+            }
+            {
+                showModal === MODAL.MANAGE_PARTICIPANTS
+                && <InviteOrRemoveParticipantsModal onCloseModal={() => setShowModal(MODAL.NONE)} />
             }
         </div>
     )
