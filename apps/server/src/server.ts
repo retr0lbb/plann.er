@@ -23,7 +23,7 @@ const app = fastify()
 app.register(cors, {
     origin: "*",
 })
-//adicionar esses dois plugins
+
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
